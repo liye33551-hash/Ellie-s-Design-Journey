@@ -1,0 +1,114 @@
+.letter-swap-text {
+  display: inline-flex;
+  align-items: baseline;
+  perspective: 900px;
+  cursor: default;
+  transform: translateY(0);
+  filter: brightness(1) drop-shadow(0 0 0 transparent);
+  transition: transform 420ms cubic-bezier(.22, 1, .36, 1),
+    filter 420ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.letter-swap-stage {
+  position: relative;
+  display: inline-block;
+  height: 1em;
+  line-height: 1;
+  perspective: 900px;
+  vertical-align: -.08em;
+}
+
+.letter-swap-space {
+  display: inline-block;
+  width: .3em;
+}
+
+.letter-swap-measure {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.letter-swap-cube {
+  position: absolute;
+  inset: 0;
+  display: block;
+  opacity: 0;
+  transform: rotateX(72deg);
+  transform-origin: 50% 50%;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+.letter-swap-text.is-visible .letter-swap-cube {
+  opacity: 1;
+  transform: rotateX(0deg);
+  transition: transform 680ms cubic-bezier(.22, 1, .36, 1),
+    opacity 360ms ease-out;
+  transition-delay: calc(var(--word-base-delay) + var(--word-index) * 42ms);
+}
+
+.letter-swap-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.letter-swap-front {
+  transform: translateZ(.48em);
+}
+
+.letter-swap-back {
+  color: #fff;
+  transform: rotateX(90deg) translateZ(.48em);
+}
+
+.figma-about-copy p {
+  transform: translate3d(0, 0, 0) rotate(0deg);
+  transform-origin: center;
+  transition: transform 720ms cubic-bezier(.22, 1, .36, 1),
+    filter 520ms cubic-bezier(.22, 1, .36, 1);
+  will-change: transform, filter;
+}
+
+.figma-about-copy:hover p {
+  filter: brightness(1.04) drop-shadow(0 8px 18px rgb(255 255 255 / 7%));
+}
+
+.figma-about-copy:hover p:nth-child(1) {
+  transform: translate3d(-.34em, -.2em, 0) rotate(-2.5deg);
+}
+
+.figma-about-copy:hover p:nth-child(2) {
+  transform: translate3d(.4em, -.06em, 0) rotate(1.8deg);
+}
+
+.figma-about-copy:hover p:nth-child(3) {
+  transform: translate3d(-.28em, .14em, 0) rotate(-1.6deg);
+}
+
+.figma-about-copy:hover p:nth-child(4) {
+  transform: translate3d(.32em, .24em, 0) rotate(2.2deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .letter-swap-cube,
+  .letter-swap-text.is-visible .letter-swap-cube {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .letter-swap-back { display: none; }
+
+  .figma-about-copy p,
+  .figma-about-copy:hover p {
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+}

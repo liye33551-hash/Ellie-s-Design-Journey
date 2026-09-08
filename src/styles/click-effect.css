@@ -1,0 +1,77 @@
+.click-effect-container {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.click-emoji,
+.click-blessing {
+  position: fixed;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform, opacity;
+}
+
+.click-emoji {
+  z-index: 2;
+  line-height: 1;
+  transform: translate(-50%, -50%) scale(.65);
+  animation: emoji-burst 900ms cubic-bezier(.22, 1, .36, 1) forwards;
+}
+
+.click-blessing {
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  max-width: min(230px, calc(100vw - 24px));
+  padding: 8px 12px;
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: 999px;
+  background: rgb(18 18 20 / 86%);
+  box-shadow: 0 12px 30px rgb(0 0 0 / 22%);
+  color: rgb(255 255 255 / 88%);
+  font-family: var(--font-ali-medium), sans-serif;
+  font-size: 13px;
+  line-height: 1.35;
+  white-space: nowrap;
+  backdrop-filter: blur(12px);
+  transform: translate(-50%, 10px) scale(.9);
+  animation: blessing-burst 1500ms cubic-bezier(.22, 1, .36, 1) forwards;
+}
+
+@keyframes emoji-burst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.65) rotate(0deg);
+  }
+  12% { opacity: 1; }
+  100% {
+    opacity: 0;
+    transform: translate(
+      calc(-50% + var(--emoji-dx)),
+      calc(-50% + var(--emoji-dy))
+    ) scale(1.15) rotate(var(--emoji-rotate));
+  }
+}
+
+@keyframes blessing-burst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 10px) scale(.9) rotate(0deg);
+  }
+  14%, 58% { opacity: 1; }
+  100% {
+    opacity: 0;
+    transform: translate(
+      calc(-50% + var(--blessing-dx)),
+      var(--blessing-dy)
+    ) scale(1) rotate(var(--blessing-rotate));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .click-effect-container { display: none; }
+}

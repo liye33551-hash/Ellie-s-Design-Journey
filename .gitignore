@@ -1,0 +1,11 @@
+node_modules
+.pnpm-store
+.next
+out
+release
+*.tsbuildinfo
+/*.png
+.DS_Store
+*.log
+.env*
+!.env.example
