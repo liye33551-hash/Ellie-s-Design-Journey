@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useRef } from "react";
 
 const scribblePath =
@@ -8,8 +8,18 @@ const scribblePath =
 
 export function AnimatedScribble() {
   const ref = useRef<HTMLDivElement>(null);
-  const reduceMotion = useReducedMotion();
-  const isInView = useInView(ref, { once: true, margin: "0px 0px -12% 0px" });
+  const reduceMotion = Boolean(useReducedMotion());
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 48%", "end 35%"],
+  });
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 150,
+    damping: 26,
+    mass: 0.35,
+  });
+  const pathLength = useTransform(smoothProgress, [0, 1], [0, 1]);
+  const opacity = useTransform(smoothProgress, [0, 0.08], [0, 1]);
 
   return (
     <div ref={ref} id="scroll-line" className="figma-object figma-scribble" aria-hidden="true" data-figma-node="25:8614">
@@ -22,9 +32,10 @@ export function AnimatedScribble() {
           strokeLinecap="round"
           strokeLinejoin="round"
           pathLength={1}
-          initial={{ pathLength: reduceMotion ? 1 : 0, opacity: reduceMotion ? 1 : 0 }}
-          animate={{ pathLength: isInView || reduceMotion ? 1 : 0, opacity: isInView || reduceMotion ? 1 : 0 }}
-          transition={{ pathLength: { duration: 1.8, ease: [0.22, 1, 0.36, 1] }, opacity: { duration: 0.25 } }}
+          style={{
+            pathLength: reduceMotion ? 1 : pathLength,
+            opacity: reduceMotion ? 1 : opacity,
+          }}
         />
       </svg>
     </div>
