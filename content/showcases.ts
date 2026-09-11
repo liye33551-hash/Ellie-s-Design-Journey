@@ -9,7 +9,7 @@ export type Showcase = {
   detailImages?: string[];
 };
 
-const creativeVisualDetailVersion = "20260911-figma";
+const creativeVisualDetailVersion = "20260911-figma-3";
 const creativeVisualDetailImages = Array.from(
   { length: 20 },
   (_, index) => `/images/portfolio/creative-visuals/${String(index + 1).padStart(2, "0")}.webp?v=${creativeVisualDetailVersion}`,
